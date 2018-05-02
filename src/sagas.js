@@ -1,10 +1,10 @@
 import { fork, all } from 'redux-saga/effects';
 
-import loginRootSaga from './containers/auth/login/sagas';
+import loginRootSaga from './containers/auth/sagas';
 
 function* rootSaga() {
   yield all([
-    fork(loginRootSaga)
+    fork(loginRootSaga),
   ]);
 }
 

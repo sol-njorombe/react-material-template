@@ -4,11 +4,12 @@
   "private": true,
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.42",
+    "ajv": "^6.4.0",
     "axios": "^0.18.0",
-    "material-ui": "^1.0.0-beta.41",
+    "material-ui": "^1.0.0-beta.42",
     "prop-types": "^15.6.1",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
@@ -16,6 +17,7 @@
     "react-scripts": "1.1.4",
     "redux": "^3.7.2",
     "redux-form": "^7.3.0",
+    "redux-reset": "^0.3.0",
     "redux-saga": "^0.16.0"
   },
   "scripts": {
@@ -23,5 +25,17 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-loader": "^1.8.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.0.1",
+    "eslint-plugin-no-storage": "^1.0.2",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-react": "^7.7.0"
   }
 }

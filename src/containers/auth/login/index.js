@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { InputAdornment } from 'material-ui/Input';
 import { AccountCircle, Lock } from '@material-ui/icons';
@@ -11,29 +12,32 @@ import { BlockButton } from '../../../components/ui/Buttons';
 import AuthLayout from '../AuthLayout';
 import validate from './validation';
 
-import * as actions from './actions';
+import * as actions from '../actions';
 
 
 class LogIn extends Component {
 
   onSubmit = (values) => {
-    console.log("Handle Submit", values);
-    actions.tryLogIn(values);
+    this.props.tryLogIn(values);
   }
 
-  render(){
+  render() {
     const { handleSubmit, pristine, submitting, invalid } = this.props;
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
+    if (this.props.auth === true) {
+      return <Redirect to={from} />;
+    }
     return (
       <AuthLayout>
-          <Card>
-            <AuthCardHeader title="Log In" />
-            <CardContent>
+        <Card>
+          <AuthCardHeader title="Log In" />
+          <CardContent>
             <form onSubmit={handleSubmit(this.onSubmit)}>
-              <Field 
-                name="email" 
-                id="email" 
-                label="Email" 
-                placeholder="Email" 
+              <Field
+                name="email"
+                id="email"
+                label="Email"
+                placeholder="Email"
                 component={renderTextField}
                 InputProps={{
                   startAdornment: (
@@ -43,12 +47,12 @@ class LogIn extends Component {
                   ),
                 }}
               />
-              <Field 
-                name="password" 
-                id="password" 
-                type="password" 
-                label="Password" 
-                placeholder="password" 
+              <Field
+                name="password"
+                id="password"
+                type="password"
+                label="Password"
+                placeholder="password"
                 component={renderTextField}
                 InputProps={{
                   startAdornment: (
@@ -59,29 +63,39 @@ class LogIn extends Component {
                 }}
               />
               <BlockButton variant="raised" color="primary" type="submit" icontype="power_settings_new" disabled={invalid || pristine || submitting} fullWidth>
-                Log In  
+                Log In
               </BlockButton>
-              
+
               <Link to="/register" >
                 <BlockButton variant="raised" color="default" fullWidth>
-                  Register 
+                  Register
                 </BlockButton>
               </Link>
 
               <Link to="/forgotpw">Forgot Password</Link>
-              
+
             </form>
-            </CardContent>
-          </Card>
-      </AuthLayout>  
+          </CardContent>
+        </Card>
+      </AuthLayout>
     );
   }
 }
 
 
-LogIn =  reduxForm({
-  form: 'login_form', 
+const formDecorator = reduxForm({
+  form: 'login_form',
   validate,
-})(LogIn);
+});
 
-export default LogIn;
+export const mapStateToProps = (state) => {
+  const props = { auth: state.Auth.authenticated };
+  return props;
+};
+
+const mapDispatchToProps = {
+  tryLogIn: actions.tryLogIn,
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)((formDecorator)(LogIn));

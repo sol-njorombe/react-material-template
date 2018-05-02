@@ -1,7 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -10,9 +10,10 @@ import IconButton from 'material-ui/IconButton';
 import Button from 'material-ui/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from 'material-ui/Switch';
-import { FormControlLabel, FormGroup } from 'material-ui/Form';
 import Menu, { MenuItem } from 'material-ui/Menu';
+
+
+import { tryLogOut } from '../../auth/actions';
 
 const styles = {
   root: {
@@ -20,7 +21,7 @@ const styles = {
   },
   flex: {
     flex: 1,
-    textDecoration: "none",
+    textDecoration: 'none',
   },
   menuButton: {
     marginLeft: -12,
@@ -30,15 +31,10 @@ const styles = {
 
 class MenuAppBar extends React.Component {
   state = {
-    auth: false,
     anchorEl: null,
   };
 
-  handleChange = (event, checked) => {
-    this.setState({ auth: checked });
-  };
-
-  handleMenu = event => {
+  handleMenu = (event) => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
@@ -47,8 +43,8 @@ class MenuAppBar extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { auth, anchorEl } = this.state;
+    const { classes, auth } = this.props;
+    const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     return (
@@ -58,7 +54,7 @@ class MenuAppBar extends React.Component {
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" color="inherit" className={classes.flex} component={Link} to={"/"}>
+            <Typography variant="title" color="inherit" className={classes.flex} component={Link} to={'/'}>
               Sch_Sys
             </Typography>
             {auth ? (
@@ -86,34 +82,35 @@ class MenuAppBar extends React.Component {
                   onClose={this.handleClose}
                 >
                   <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                  <MenuItem component={Link} to={'/logout'} >Log Out</MenuItem>
                 </Menu>
               </div>
             ) : (
               <div>
-              <Button color="inherit" component={Link} to={"/login"}>
-                Log In
-              </Button>
-            </div>
+                <Button color="inherit" component={Link} to={'/login'}>
+                  Log In
+                </Button>
+              </div>
             )
           }
           </Toolbar>
         </AppBar>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
-            }
-            label={auth ? 'Logout' : 'Login'}
-          />
-        </FormGroup>
       </div>
     );
   }
 }
 
-MenuAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
+export const mapStateToProps = (state) => {
+  const props = {
+    auth: state.Auth.authenticated,
+  };
+  return props;
 };
 
-export default withStyles(styles)(MenuAppBar);
+
+const mapDispatchToProps = {
+  tryLogOut,
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MenuAppBar));

@@ -2,11 +2,9 @@ import { combineReducers } from 'redux';
 
 import { reducer as formReducer } from 'redux-form';
 
-import LogInReducer from '../containers/auth/login/reducer';
+import authReducer from '../containers/auth/reducer';
 
-export default (routerReducer) => {
-  return combineReducers({
-    form: formReducer,
-    login: LogInReducer
-  });
-};
+export default () => combineReducers({
+  form: formReducer,
+  Auth: authReducer,
+});
