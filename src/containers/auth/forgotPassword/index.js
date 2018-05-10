@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Card, CardContent } from 'material-ui';
 
@@ -14,7 +15,7 @@ class ForgotPassword extends Component {
 
   onSubmit = (values) => {
     console.log('Handle Submit', values);
-    actions.tryForgotPw(values);
+    this.props.forgotPw(values.email);
   }
 
   render() {
@@ -24,6 +25,10 @@ class ForgotPassword extends Component {
         <Card>
           <AuthCardHeader title="Recover Password" />
           <CardContent>
+            {
+              (this.props.forgotPwMsg && this.props.forgotPwMsg.success) &&
+              <p>{this.props.forgotPwMsg.message}</p>
+            }
             <form onSubmit={handleSubmit(this.onSubmit)}>
               <Field
                 name="email"
@@ -32,11 +37,9 @@ class ForgotPassword extends Component {
                 placeholder="Recovery Email"
                 component={renderTextField}
               />
-
               <BlockButton variant="raised" color="primary" type="submit" icontype="power_settings_new" disabled={invalid || pristine || submitting} fullWidth>
                 Recover Password
               </BlockButton>
-
             </form>
           </CardContent>
         </Card>
@@ -50,4 +53,13 @@ const FormWrapper = reduxForm({
   validate,
 });
 
-export default (FormWrapper)(ForgotPassword);
+const mapStateToProps = state => ({
+  auth: state.Auth.authenticated,
+  forgotPwMsg: state.Auth.forgotPwMsg,
+});
+
+const mapDispatchToProps = {
+  forgotPw: actions.forgotPw,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)((FormWrapper)(ForgotPassword));

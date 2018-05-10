@@ -6,6 +6,7 @@ export const initialState = {
   firstname: '',
   lastname: '',
   registerErrors: null,
+  forgotPwMsg: null,
 };
 
 export default (state = initialState, action) => {
@@ -18,6 +19,7 @@ export default (state = initialState, action) => {
         lastname: action.lastname,
         email: action.email,
       };
+
     case constants.STORAGE_AUTH_SUCCESS:
       return {
         ...state,
@@ -26,6 +28,22 @@ export default (state = initialState, action) => {
         lastname: action.lastname,
         email: action.email,
       };
+
+    case constants.REGISTER_SUCCESS:
+      return {
+        ...state,
+        authenticated: true,
+        firstname: action.firstname,
+        lastname: action.lastname,
+        email: action.email,
+      };
+
+    case constants.FORGOT_PW_SUCCESS:
+      return {
+        ...state,
+        forgotPwMsg: action.response,
+      };
+
     default:
       return state;
   }

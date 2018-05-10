@@ -1,20 +1,10 @@
 import * as constants from './constants';
 
-export const tryRegister = (values) => {
-  console.log('Register Params', values);
-  return {
-    type: constants.TRY_REGISTER,
-    values,
-  };
-};
-
-export const tryLogIn = (values) => {
-  console.log('Login Params', values);
-  return {
-    type: constants.TRY_LOG_IN,
-    values,
-  };
-};
+// Log In
+export const tryLogIn = values => ({
+  type: constants.TRY_LOG_IN,
+  values,
+});
 
 export const logInSuccess = (response) => {
   const userData = response.data;
@@ -26,62 +16,73 @@ export const logInSuccess = (response) => {
   };
 };
 
-export const logInError = (response) => {
-  console.log(response);
+export const logInError = error => ({
+  type: constants.CREATE_NOTIFICATION,
+  message: error.data.errors[0],
+  status: 'error',
+});
+
+// Session retrieval using storage
+export const tryStorageAuth = () => ({ type: constants.TRY_STORAGE_AUTH });
+
+export const storageAuthSuccess = response => ({
+  type: constants.STORAGE_AUTH_SUCCESS,
+  firstname: response.data.firstname,
+  lastname: response.data.lastname,
+  email: response.data.email,
+});
+
+export const storageAuthError = () => ({ type: 'RESET' });
+
+// Try Register
+export const register = values => ({
+  type: constants.TRY_REGISTER,
+  values,
+});
+
+export const registerSuccess = (response) => {
+  const userData = response.data;
   return {
-    type: constants.LOG_IN_ERROR,
-    response,
+    type: constants.REGISTER_SUCCESS,
+    firstname: userData.firstname,
+    lastname: userData.lastname,
+    email: userData.email,
   };
 };
 
+export const registerError = error => ({
+  type: constants.CREATE_NOTIFICATION,
+  message: error.data.errors[0],
+  status: 'error',
+});
 
-export const tryForgotPw = (values) => {
-  console.log('Login Params', values);
-  return {
-    type: constants.TRY_FORGOT_PW,
-    values,
-  };
-};
+// Forgot Password
+export const forgotPw = email => ({
+  type: constants.TRY_FORGOT_PW,
+  email,
+});
 
-export const tryLogOut = () => {
-  console.log('Trying to log out');
-  return {
-    type: constants.TRY_LOG_OUT,
-  };
-};
+export const forgotPwSuccess = response => ({
+  type: constants.FORGOT_PW_SUCCESS,
+  response,
+});
 
-export const logOutSuccess = () => {
-  console.log('Logout success action');
-  return { type: 'RESET' };
-};
+export const forgotPwError = error => ({
+  type: constants.CREATE_NOTIFICATION,
+  message: error.data.errors[0],
+  status: 'error',
+});
 
-export const logOutError = () => {
-  console.log('Logout error action');
-  return {
-    type: constants.LOG_OUT_ERROR,
-  };
-};
+// Log out
+export const tryLogOut = () => ({
+  type: constants.TRY_LOG_OUT,
+});
 
-export const tryStorageAuth = () => {
-  console.log('try session retrieve');
-  return {
-    type: constants.TRY_STORAGE_AUTH,
-  };
-};
+export const logOutSuccess = () => ({ type: 'RESET' });
 
-export const storageAuthSuccess = (response) => {
-  console.log('storage auth', response);
-  return {
-    type: constants.STORAGE_AUTH_SUCCESS,
-    firstname: response.data.firstname,
-    lastname: response.data.lastname,
-    email: response.data.email,
-  };
-};
+export const logOutError = error => ({
+  type: constants.CREATE_NOTIFICATION,
+  message: error.data.errors[0],
+  status: 'error',
+});
 
-export const storageAuthError = () => {
-  console.log('Token no longer valid');
-  return {
-    type: 'RESET',
-  };
-};

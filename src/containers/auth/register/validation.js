@@ -1,25 +1,29 @@
 import * as validators from '../../../helpers/validations';
 
-export default function(values) {
+export default function (values) {
   const errors = {};
   const requiredFields = [
-    'first_name',
-    'middle_name',
-    'last_name',
+    'firstname',
+    'middlename',
+    'lastname',
     'email',
     'password',
-    'confirm_password'
+    'confirm_password',
   ];
 
-  requiredFields.forEach(field => {
+  requiredFields.forEach((field) => {
     if (!values[field]) {
       errors[field] = 'Required';
     }
   });
 
-  if (values.email && !validators.validEmail(values.email)){
-     errors.email = 'Invalid email address';
+  if (values.email && !validators.validEmail(values.email)) {
+    errors.email = 'Invalid email address';
   }
-  
+
+  if (values.confirm_password !== values.password) {
+    errors.confirm_password = 'Does not match with password';
+  }
+
   return errors;
 }

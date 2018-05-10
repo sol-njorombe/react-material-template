@@ -72,7 +72,7 @@ class LogIn extends Component {
                 </BlockButton>
               </Link>
 
-              <Link to="/forgotpw">Forgot Password</Link>
+              <Link to="/forgotpw" className={'primary'}>Forgot Password</Link>
 
             </form>
           </CardContent>
@@ -88,10 +88,9 @@ const formDecorator = reduxForm({
   validate,
 });
 
-export const mapStateToProps = (state) => {
-  const props = { auth: state.Auth.authenticated };
-  return props;
-};
+const mapStateToProps = state => ({
+  auth: state.Auth.authenticated,
+});
 
 const mapDispatchToProps = {
   tryLogIn: actions.tryLogIn,

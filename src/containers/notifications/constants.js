@@ -1,0 +1,2 @@
+export const CREATE_NOTIFICATION = 'notifications/CREATE_NOTIFICATION';
+export const DESTROY_NOTIFICATION = 'notifications/DESTROY_NOTIFICATION';

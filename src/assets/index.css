@@ -3,3 +3,12 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+a.primary {
+  text-decoration: none;
+  color: #162594;
+}
+
+a.primary:hover, a.primary:active {
+  color: rgb(66, 78, 146)
+}

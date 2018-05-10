@@ -7,6 +7,7 @@ import createSagaMiddleware from 'redux-saga';
 import reduxReset from 'redux-reset';
 
 import MenuAppBar from './containers/navigation/MenuAppBar';
+import Notification from './containers/notifications';
 
 import AppRoutes from './routes';
 import createReducers from './reducers';
@@ -31,6 +32,7 @@ const App = () => (
     <BrowserRouter>
       <div>
         <MenuAppBar />
+        <Notification />
         <AppRoutes />
       </div>
     </BrowserRouter>

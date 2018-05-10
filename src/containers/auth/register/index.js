@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Card, CardContent } from 'material-ui';
 
@@ -14,12 +15,15 @@ import * as actions from '../actions';
 class Register extends Component {
 
   onSubmit = (values) => {
-    console.log('Handle Submit', values);
-    actions.tryRegister(values);
+    this.props.register(values);
   }
 
   render() {
     const { handleSubmit, pristine, submitting, invalid } = this.props;
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
+    if (this.props.auth === true) {
+      return <Redirect to={from} />;
+    }
     return (
       <AuthLayout>
         <Card>
@@ -27,22 +31,22 @@ class Register extends Component {
           <CardContent>
             <form onSubmit={handleSubmit(this.onSubmit)}>
               <Field
-                name="first_name"
-                id="first_name"
+                name="firstname"
+                id="firstname"
                 label="First Name"
                 placeholder="First Name"
                 component={renderTextField}
               />
               <Field
-                name="middle_name"
-                id="middle_name"
+                name="middlename"
+                id="middlename"
                 label="Middle Name"
                 placeholder="Middle Name"
                 component={renderTextField}
               />
               <Field
-                name="last_name"
-                id="last_name"
+                name="lastname"
+                id="lastname"
                 label="Last Name"
                 placeholder="Last Name"
                 component={renderTextField}
@@ -91,4 +95,12 @@ const FormWrapper = reduxForm({
   validate,
 });
 
-export default (FormWrapper)(Register);
+const mapStateToProps = state => ({
+  auth: state.Auth.authenticated,
+});
+
+const mapDispatchToProps = {
+  register: actions.register,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)((FormWrapper)(Register));
