@@ -28,6 +28,7 @@ export function* tryStorageLogIn() {
     const response = yield call(api.validateToken);
     yield put(actions.storageAuthSuccess(response.data));
   } catch (error) {
+    yield call(api.cleanSession);
     yield put(actions.storageAuthError(error.response));
   }
 }
@@ -44,11 +45,21 @@ export function* tryRegister(action) {
 
 export function* tryForgotPw(action) {
   try {
-    const response = yield call(api.resetPassword, action.email);
+    const response = yield call(api.forgotPassword, action.email);
     yield put(actions.forgotPwSuccess(response.data));
   } catch (error) {
     console.log(error);
     // yield put(actions.forgotPwError(error.response));
+  }
+}
+
+export function* tryResetPw(action) {
+  try {
+    yield call(api.resetPassword, action.passwords);
+    yield call(api.cleanSession);
+    // navigate to log in page
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -58,6 +69,7 @@ function* authRootSaga() {
   yield takeLatest(constants.TRY_STORAGE_AUTH, tryStorageLogIn);
   yield takeLatest(constants.TRY_REGISTER, tryRegister);
   yield takeLatest(constants.TRY_FORGOT_PW, tryForgotPw);
+  yield takeLatest(constants.TRY_RESET_PW, tryResetPw);
 }
 
 export default authRootSaga;

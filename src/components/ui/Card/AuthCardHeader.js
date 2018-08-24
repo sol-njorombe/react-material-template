@@ -4,11 +4,11 @@ import { CardHeader } from 'material-ui';
 
 const styles = {
   root: {
-    backgroundColor: '#3F51B5'
+    backgroundColor: '#3F51B5',
   },
   title: {
-    color: '#fff'
-  }
+    color: '#fff',
+  },
 };
 
 function Classes(props) {
@@ -16,7 +16,7 @@ function Classes(props) {
     <CardHeader
       classes={{
         root: props.classes.root,
-        title: props.classes.title
+        title: props.classes.title,
       }}
       {...props}
     />

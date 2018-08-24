@@ -1,9 +1,8 @@
-import * as validators from '../../../helpers/validations';
-
 export default function (values) {
   const errors = {};
   const requiredFields = [
-    'email',
+    'password',
+    'password_confirmation',
   ];
 
   requiredFields.forEach((field) => {
@@ -12,8 +11,8 @@ export default function (values) {
     }
   });
 
-  if (values.email && !validators.validEmail(values.email)) {
-    errors.email = 'Invalid email address';
+  if (values.password_confirmation !== values.password) {
+    errors.password_confirmation = 'Does not match with password';
   }
 
   return errors;

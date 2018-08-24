@@ -13,6 +13,8 @@ import AppRoutes from './routes';
 import createReducers from './reducers';
 import rootSaga from './sagas';
 
+import './assets/css/style.css';
+
 const composeEnhancers =
   process.env.NODE_ENV === 'development'
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__

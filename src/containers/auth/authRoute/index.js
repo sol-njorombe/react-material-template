@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router';
+import Grid from 'material-ui/Grid';
 
+import Progress from '../../../components/ui/CircularProgess';
 import * as actions from '../actions';
 
 
@@ -18,7 +20,11 @@ const AuthRoute = ({ component: Component, ...rest, auth = false, tryStorageAuth
   } 
   
   tryStorageAuth();
-  return (<p>Trying session retrieval</p>);
+  return (
+    <Grid container justify={'center'}>
+      <Progress/>
+    </Grid>
+  );
 };
 
 const mapStateToProps = (state) => {

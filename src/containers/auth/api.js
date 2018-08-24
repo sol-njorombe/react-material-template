@@ -60,13 +60,20 @@ export const updateUser = user => axios({
   },
 });
 
-export const resetPassword = email => axios({
+export const forgotPassword = email => axios({
   url: '/auth/password',
   method: 'POST',
   data: {
     email,
     redirect_url: 'http://localhost:3000/resetpw',
   },
+});
+
+
+export const resetPassword = passwords => axios({
+  url: '/auth/password',
+  method: 'PUT',
+  data: passwords,
 });
 
 export const validateToken = () => axios.get('/auth/validate_token');

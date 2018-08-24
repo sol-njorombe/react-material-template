@@ -20,3 +20,6 @@ export const TRY_LOG_OUT = 'auth/TRY_LOG_OUT';
 export const LOG_OUT_SUCCESS = 'auth/LOG_OUT_SUCCESS';
 export const LOG_OUT_ERROR = 'auth/LOG_OUT_ERROR';
 
+export const TRY_RESET_PW = 'auth/TRY_RESET_PW';
+export const RESET_PW_SUCCESS = 'auth/RESET_PW_SUCCESS';
+export const RESET_PW_ERROR = 'auth/RESET_PW_ERROR';

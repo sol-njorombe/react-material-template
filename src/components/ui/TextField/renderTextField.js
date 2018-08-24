@@ -3,11 +3,11 @@ import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     marginTop: '20px',
-    marginBottom: '20px'
-  }
+    marginBottom: '20px',
+  },
 });
 
 export const renderTextField = withStyles(styles)(({
@@ -16,7 +16,7 @@ export const renderTextField = withStyles(styles)(({
   meta: { touched, error },
   ...custom
 }) => {
-  const errorFlag = touched && error ? true : false;
+  const errorFlag = (touched && error) ? true: false;
   return (
     <FormControl fullWidth error={errorFlag}>
       <TextField
@@ -27,5 +27,7 @@ export const renderTextField = withStyles(styles)(({
       />
       { errorFlag && <FormHelperText>{error}</FormHelperText> }
     </FormControl>
-  )
-})
+  );
+});
+
+export default renderTextField;

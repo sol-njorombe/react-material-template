@@ -20,6 +20,7 @@ const Routes = () => (<Switch>
   <Route path="/logout" exact component={LogOut} />
   <Route path="/forgotpw" exact component={ForgotPassword} />
   <Route path="/resetpw" exact component={ResetPassword} />
+
 </Switch>);
 
 export default Routes;

@@ -86,3 +86,18 @@ export const logOutError = error => ({
   status: 'error',
 });
 
+// reset password
+export const tryResetPw = passwords => ({
+  type: constants.TRY_RESET_PW,
+  passwords,
+});
+
+export const resetPwSuccess = () => ({
+  type: constants.RESET_PW_SUCCESS,
+});
+
+export const resetPwError = error => ({
+  type: constants.CREATE_NOTIFICATION,
+  message: error.data.errors[0],
+  status: 'error',
+});

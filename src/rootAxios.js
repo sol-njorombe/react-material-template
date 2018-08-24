@@ -1,8 +1,9 @@
 import axios from 'axios';
 import * as responseActions from './containers/notifications/actions';
+import { BASE_URL } from './_config';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://104.236.28.48:80',
+  baseURL: BASE_URL,
   /* other custom settings */
 });
 

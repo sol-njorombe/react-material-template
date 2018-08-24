@@ -14,7 +14,6 @@ import * as actions from '../actions';
 class ForgotPassword extends Component {
 
   onSubmit = (values) => {
-    console.log('Handle Submit', values);
     this.props.forgotPw(values.email);
   }
 
